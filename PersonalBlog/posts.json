@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "title": "Introduction to Web Development",
+        "author": "John Doe",
+        "date": "2025-01-01",
+        "content": "Web development is the process of building websites and web applications...",
+        "category": "Technology"
+    },
+    {
+        "id": 2,
+        "title": "Understanding CSS Grid",
+        "author": "Jane Smith",
+        "date": "2025-01-15",
+        "content": "CSS Grid is a powerful layout system in CSS. It allows you to create complex grid-based layouts with ease...",
+        "category": "CSS"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "postId": 1,
+        "author": "Alice",
+        "content": "Great article! I learned a lot about web development.",
+        "date": "2025-01-02"
+    },
+    {
+        "postId": 2,
+        "author": "Bob",
+        "content": "CSS Grid is amazing. Thanks for the detailed explanation!",
+        "date": "2025-01-16"
+    }
+]

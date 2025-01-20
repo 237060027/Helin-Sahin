@@ -1,0 +1,50 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "title": "How to Learn JavaScript",
+            "category": "Programming",
+            "author": "JohnDoe",
+            "date": "2025-01-20",
+            "content": "JavaScript is one of the most important languages for web development...",
+            "comments": [
+                { "user": "Alice", "text": "Great article! Very helpful." },
+                { "user": "Bob", "text": "Thanks for sharing!" }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "The Future of Web Development",
+            "category": "Technology",
+            "author": "JaneSmith",
+            "date": "2025-01-18",
+            "content": "Web development is evolving rapidly with new frameworks and technologies...",
+            "comments": [
+                { "user": "Charlie", "text": "Can't wait to see how this unfolds!" }
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Understanding CSS Grid",
+            "category": "Design",
+            "author": "JohnDoe",
+            "date": "2025-01-15",
+            "content": "CSS Grid is a powerful layout system...",
+            "comments": []
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "username": "JohnDoe",
+            "bio": "Web developer & tech enthusiast.",
+            "posts": [1, 3]
+        },
+        {
+            "id": 2,
+            "username": "JaneSmith",
+            "bio": "Passionate about AI and data science.",
+            "posts": [2]
+        }
+    ]
+}

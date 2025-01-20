@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Blog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>My Personal Blog</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li id="login-link"><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+        <div id="user-info" style="display: none;">
+            <span id="username"></span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <section id="search">
+        <input type="text" id="search-box" placeholder="Search for posts..." onkeyup="searchPosts()">
+        <button onclick="searchPosts()">Search</button>
+    </section>
+
+    <section id="categories">
+        <button onclick="filterCategory('All')">All</button>
+        <button onclick="filterCategory('JavaScript')">JavaScript</button>
+        <button onclick="filterCategory('CSS')">CSS</button>
+        <button onclick="filterCategory('HTML')">HTML</button>
+        <button onclick="filterCategory('Technology')">Technology</button>
+    </section>
+
+    <section id="blog-posts">
+        <!-- Örnek blog postları -->
+        <article data-category="JavaScript" id="post-1">
+            <h2><a href="#">Understanding Closures in JavaScript</a></h2>
+            <div class="post-content">
+                <p>A guide to closures and how they work in JavaScript.</p>
+                <p>A closure is created when a function is defined inside another function...</p>
+            </div>
+            <div class="comment-section">
+                <textarea placeholder="Add your comment..." id="comment-text-1"></textarea>
+                <button class="comment-btn" onclick="postComment(1)">Post Comment</button>
+                <div id="comments-1"></div>
+            </div>
+        </article>
+        <article data-category="CSS" id="post-2">
+            <h2><a href="#">CSS Flexbox: A Beginner's Guide</a></h2>
+            <div class="post-content">
+                <p>Learn how to use Flexbox to create responsive layouts.</p>
+            </div>
+            <div class="comment-section">
+                <textarea placeholder="Add your comment..." id="comment-text-2"></textarea>
+                <button class="comment-btn" onclick="postComment(2)">Post Comment</button>
+                <div id="comments-2"></div>
+            </div>
+        </article>
+        <article data-category="HTML" id="post-3">
+            <h2><a href="#">Semantic HTML: Best Practices</a></h2>
+            <div class="post-content">
+                <p>How to write semantic and accessible HTML.</p>
+            </div>
+            <div class="comment-section">
+                <textarea placeholder="Add your comment..." id="comment-text-3"></textarea>
+                <button class="comment-btn" onclick="postComment(3)">Post Comment</button>
+                <div id="comments-3"></div>
+            </div>
+        </article>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 My Personal Blog</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            const loginLink = document.getElementById('login-link');
+            const userInfo = document.getElementById('user-info');
+            const usernameSpan = document.getElementById('username');
+
+            if (loggedInUser) {
+                // Kullanıcı giriş yaptıysa bilgileri göster
+                userInfo.style.display = 'block';
+                // Ad ve soyadı göster
+                usernameSpan.textContent = `Welcome, ${loggedInUser.firstName} ${loggedInUser.lastName}!`;
+                loginLink.style.display = 'none';
+            } else {
+                // Kullanıcı giriş yapmadıysa
+                loginLink.style.display = 'block';
+                userInfo.style.display = 'none';
+            }
+
+            // Yorumları sayfa yenilendiğinde yüklemek
+            loadComments();
+        });
+
+        function logout() {
+            // localStorage'dan kullanıcıyı kaldır ve login sayfasına yönlendir
+            localStorage.removeItem('loggedInUser');
+            window.location.href = 'login.html';
+        }
+
+        function searchPosts() {
+            const searchBox = document.getElementById('search-box').value.toLowerCase();
+            const blogPosts = document.querySelectorAll('#blog-posts article');
+
+            blogPosts.forEach(post => {
+                const title = post.querySelector('h2').textContent.toLowerCase();
+                if (title.includes(searchBox)) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        function filterCategory(category) {
+            const blogPosts = document.querySelectorAll('#blog-posts article');
+
+            blogPosts.forEach(post => {
+                const postCategory = post.getAttribute('data-category');
+                if (category === 'All' || postCategory === category) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        function togglePostContent(link) {
+            const postContent = link.closest('article').querySelector('.post-content');
+            const isVisible = postContent.style.display === 'block';
+            
+            if (isVisible) {
+                postContent.style.display = 'none';
+            } else {
+                postContent.style.display = 'block';
+            }
+        }
+
+        function postComment(postId) {
+            const commentText = document.getElementById(`comment-text-${postId}`).value;
+            if (!commentText.trim()) return;
+
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            const commentAuthor = loggedInUser ? `${loggedInUser.firstName} ${loggedInUser.lastName}` : 'Anonymous';  // Kullanıcı giriş yaptıysa, ad ve soyadını al
+
+            const comment = {
+                author: commentAuthor,
+                content: commentText
+            };
+
+            // Yorumları localStorage'a kaydet
+            const commentsKey = `comments-${postId}`;
+            let postComments = JSON.parse(localStorage.getItem(commentsKey)) || [];
+            postComments.push(comment);
+            localStorage.setItem(commentsKey, JSON.stringify(postComments));
+
+            // Yorum alanını temizle
+            document.getElementById(`comment-text-${postId}`).value = '';
+
+            // Yorumları yükle
+            loadComments();
+        }
+
+        function loadComments() {
+            const posts = document.querySelectorAll('#blog-posts article');
+            posts.forEach(post => {
+                const postId = post.id.split('-')[1];
+                const commentsKey = `comments-${postId}`;
+                const commentsContainer = document.getElementById(`comments-${postId}`);
+
+                // Yorumları localStorage'tan al
+                const postComments = JSON.parse(localStorage.getItem(commentsKey)) || [];
+
+                // Yorumları ekle
+                commentsContainer.innerHTML = '';
+                postComments.forEach(comment => {
+                    const commentElement = document.createElement('p');
+                    commentElement.textContent = `${comment.author}: ${comment.content}`;
+                    commentsContainer.appendChild(commentElement);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="login-register.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <input type="text" id="firstName" placeholder="First Name" required><br>
+        <input type="text" id="lastName" placeholder="Last Name" required><br>
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <textarea id="bio" placeholder="Tell us about yourself (optional)"></textarea><br>
+        <button onclick="register()">Register</button>
+        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+    <script>
+        function register() {
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const bio = document.getElementById("bio").value;
+
+            // Tüm alanların doldurulup doldurulmadığını kontrol et
+            if (firstName && lastName && email && password) {
+                const newUser = {
+                    id: Date.now(),
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    bio // Bio alanını ekledik
+                };
+
+                // Mevcut kullanıcıları localStorage'dan al
+                const users = JSON.parse(localStorage.getItem("users")) || [];
+                
+                // Yeni kullanıcıyı diziye ekle
+                users.push(newUser);
+
+                // Güncellenmiş kullanıcıları localStorage'a kaydet
+                localStorage.setItem("users", JSON.stringify(users));
+                
+                // LocalStorage'dan kullanıcıları kontrol et
+                console.log("Stored Users:", JSON.parse(localStorage.getItem("users")));
+
+                alert("Registration successful!");
+                window.location.href = "login.html"; // Kayıt başarılıysa giriş sayfasına yönlendir
+            } else {
+                alert("Please fill all required fields.");
+            }
+        }
+    </script>
+</body>
+</html>
