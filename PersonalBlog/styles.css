@@ -6,7 +6,7 @@ body {
     background-size: cover;
     color: #333;
     line-height: 1.4;
-    position: relative; /* Sabit değil, kaydırılabilir */
+    position: relative; 
     min-height: 100vh;
     z-index: 0;
 }
@@ -166,7 +166,7 @@ footer {
     padding: 10px;
     font-size: 1rem;
     width: 100%;
-    position: absolute; /* Footer'ı sabitlemek için */
+    position: absolute; 
     bottom: 0;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }

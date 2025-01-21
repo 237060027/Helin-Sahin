@@ -26,7 +26,7 @@
             const password = document.getElementById("password").value;
             const bio = document.getElementById("bio").value;
 
-            // Tüm alanların doldurulup doldurulmadığını kontrol et
+            
             if (firstName && lastName && email && password) {
                 const newUser = {
                     id: Date.now(),
@@ -34,23 +34,23 @@
                     lastName,
                     email,
                     password,
-                    bio // Bio alanını ekledik
+                    bio 
                 };
 
-                // Mevcut kullanıcıları localStorage'dan al
+                
                 const users = JSON.parse(localStorage.getItem("users")) || [];
                 
-                // Yeni kullanıcıyı diziye ekle
+                
                 users.push(newUser);
 
-                // Güncellenmiş kullanıcıları localStorage'a kaydet
+                
                 localStorage.setItem("users", JSON.stringify(users));
                 
-                // LocalStorage'dan kullanıcıları kontrol et
+                
                 console.log("Stored Users:", JSON.parse(localStorage.getItem("users")));
 
                 alert("Registration successful!");
-                window.location.href = "login.html"; // Kayıt başarılıysa giriş sayfasına yönlendir
+                window.location.href = "login.html"; 
             } else {
                 alert("Please fill all required fields.");
             }

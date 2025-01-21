@@ -37,7 +37,6 @@
     </section>
 
     <section id="blog-posts">
-        <!-- Örnek blog postları -->
         <article data-category="JavaScript" id="post-1">
             <h2><a href="#">Understanding Closures in JavaScript</a></h2>
             <div class="post-content">
@@ -86,23 +85,18 @@
             const usernameSpan = document.getElementById('username');
 
             if (loggedInUser) {
-                // Kullanıcı giriş yaptıysa bilgileri göster
                 userInfo.style.display = 'block';
-                // Ad ve soyadı göster
                 usernameSpan.textContent = `Welcome, ${loggedInUser.firstName} ${loggedInUser.lastName}!`;
                 loginLink.style.display = 'none';
             } else {
-                // Kullanıcı giriş yapmadıysa
                 loginLink.style.display = 'block';
                 userInfo.style.display = 'none';
             }
 
-            // Yorumları sayfa yenilendiğinde yüklemek
             loadComments();
         });
 
         function logout() {
-            // localStorage'dan kullanıcıyı kaldır ve login sayfasına yönlendir
             localStorage.removeItem('loggedInUser');
             window.location.href = 'login.html';
         }
@@ -157,16 +151,13 @@
                 content: commentText
             };
 
-            // Yorumları localStorage'a kaydet
             const commentsKey = `comments-${postId}`;
             let postComments = JSON.parse(localStorage.getItem(commentsKey)) || [];
             postComments.push(comment);
             localStorage.setItem(commentsKey, JSON.stringify(postComments));
 
-            // Yorum alanını temizle
             document.getElementById(`comment-text-${postId}`).value = '';
 
-            // Yorumları yükle
             loadComments();
         }
 
@@ -177,10 +168,8 @@
                 const commentsKey = `comments-${postId}`;
                 const commentsContainer = document.getElementById(`comments-${postId}`);
 
-                // Yorumları localStorage'tan al
                 const postComments = JSON.parse(localStorage.getItem(commentsKey)) || [];
 
-                // Yorumları ekle
                 commentsContainer.innerHTML = '';
                 postComments.forEach(comment => {
                     const commentElement = document.createElement('p');
